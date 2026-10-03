@@ -5,14 +5,29 @@ permalink: /music/
 ---
 
 <style>
+  /* --- View Transitions --- */
+  @view-transition {
+    navigation: auto;
+  }
 
-/* Album Header */
+  .home-name, .page__title {
+    view-transition-name: wander-title;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  ::view-transition-group(wander-title) {
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* --- Album Header --- */
   .album-header {
     display: flex;
     align-items: flex-end;
-    margin-top: 1rem; /* Restored to normal spacing */
+    margin-top: 1rem;
     margin-bottom: 0.75rem;
-    /* Removed min-height and gap so it collapses completely */
   }
 
   .album-title {
@@ -23,33 +38,57 @@ permalink: /music/
     text-transform: lowercase;
     margin: 0;
     padding-bottom: 4px;
-    white-space: nowrap; /* Prevents text wrapping while expanding */
+    white-space: nowrap;
   }
 
   .album-cover {
     width: 0px;
     height: 0px;
-    margin-left: 0px; /* Handles spacing dynamically instead of using gap */
+    margin-left: 0px;
     opacity: 0;
     object-fit: cover;
     pointer-events: none;
     box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    /* Animate dimensions and spacing for a fluid push effect */
     transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                 height 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                 margin-left 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                opacity 0.4s ease 0.1s; /* Slight delay on opacity so it doesn't pop */
+                opacity 0.4s ease 0.1s;
   }
 
   .album-cover.active {
     width: 140px;
     height: 140px;
-    margin-left: 2rem; /* Creates the gap as it grows */
+    margin-left: 2rem;
     opacity: 1;
     pointer-events: auto;
   }
 
-  /* Track Styles */
+  /* --- Comments --- */
+  .album-comment {
+    font-size: 0.85rem;
+    color: #888;
+    line-height: 1.5;
+    max-width: 480px;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .song-ui-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+
+  .song-comment {
+    font-size: 0.8rem;
+    color: #999;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* --- Track Styles --- */
   .song-list {
     list-style-type: none;
     padding: 0;
@@ -161,31 +200,6 @@ permalink: /music/
   .download-btn:hover {
     color: #111;
   }
-
-/* --- NEW: Comment Styling --- */
-  .album-comment {
-    font-size: 0.85rem;
-    color: #888;
-    line-height: 1.5;
-    max-width: 480px;
-    margin-top: -0.5rem; /* Pulls it closer to the expanding album header */
-    margin-bottom: 2rem;
-  }
-
-  .song-ui-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 0.4rem;
-    justify-content: center;
-  }
-
-  .song-comment {
-    font-size: 0.8rem;
-    color: #999;
-    line-height: 1.4;
-    margin: 0;
-  }
 </style>
 
 {% for group in site.data.albums %}
@@ -230,7 +244,6 @@ permalink: /music/
           <div class="song-details">
             <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
 
-            <!-- Track Player and Comment Stack -->
             <div class="song-ui-wrapper">
               <div class="custom-player">
                 <button class="play-toggle">play</button>
@@ -253,35 +266,6 @@ permalink: /music/
   </div>
 {% endfor %}
 
-if the track is an object with a specific file, or just a string -->
-        {% if track.title %}
-          {% assign track_title = track.title %}
-          {% assign filename = track.file %}
-        {% else %}
-          {% assign track_title = track %}
-          {% assign filename = track | remove: " " %}
-        {% endif %}
-
-        <li class="song-item">
-          <span class="song-title">{{ track_title }}</span>
-          <div class="song-details">
-            <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
-            <div class="custom-player">
-              <button class="play-toggle">play</button>
-              <input type="range" class="progress-bar" value="0" max="100">
-              <span class="time-display">0:00</span>
-              <a href="/assets/audio/{{ filename }}.mp3" download class="download-btn">↓</a>
-            </div>
-          </div>
-          <audio preload="none">
-            <source src="/assets/audio/{{ filename }}.mp3" type="audio/mpeg">
-          </audio>
-        </li>
-      {% endfor %}
-   </ul>
-  </div>
-{% endfor %}
-
 <script>
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return "0:00";
@@ -301,7 +285,7 @@ if the track is an object with a specific file, or just a string -->
     const progressBar = item.querySelector('.progress-bar');
     const timeDisplay = item.querySelector('.time-display');
 
-  title.addEventListener('click', () => {
+    title.addEventListener('click', () => {
       const albumSection = item.closest('.album-section');
       const albumCover = albumSection ? albumSection.querySelector('.album-cover') : null;
 
@@ -314,7 +298,6 @@ if the track is an object with a specific file, or just a string -->
         oldDetails.classList.remove('active');
         activeItem.querySelector('.play-toggle').textContent = 'play';
 
-        // Hide the old album cover smoothly via CSS class
         const oldAlbumSection = activeItem.closest('.album-section');
         const oldAlbumCover = oldAlbumSection ? oldAlbumSection.querySelector('.album-cover') : null;
 
@@ -326,7 +309,6 @@ if the track is an object with a specific file, or just a string -->
       songDetails.style.display = 'flex';
       setTimeout(() => songDetails.classList.add('active'), 10);
 
-      // Show the new album cover smoothly via CSS class
       if (albumCover && !albumCover.getAttribute('data-error')) {
         albumCover.classList.add('active');
       }
