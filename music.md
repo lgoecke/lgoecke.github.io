@@ -10,8 +10,8 @@ permalink: /music/
   .album-header {
     display: flex;
     align-items: flex-end;
-    margin-top: 3rem; /* Restored to normal spacing */
-    margin-bottom: 1.5rem;
+    margin-top: 1rem; /* Restored to normal spacing */
+    margin-bottom: 0.75rem;
     /* Removed min-height and gap so it collapses completely */
   }
 
