@@ -1,5 +1,5 @@
 ---
 layout: single
-title: "luca göcke writing"
+title: "luca göcke"
 permalink: /writing/
 ---

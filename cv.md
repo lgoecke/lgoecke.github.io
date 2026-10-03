@@ -1,5 +1,5 @@
 ---
 layout: single
-title: "luca göcke cv"
+title: "luca göcke"
 permalink: /cv/
 ---

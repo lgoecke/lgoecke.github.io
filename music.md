@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "luca göcke music"
+title: "luca göcke"
 permalink: /music/
 ---
 
@@ -13,7 +13,7 @@ permalink: /music/
   .song-item {
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     min-height: 40px;
     gap: 1.5rem; /* Controls the exact distance between name and player */
   }
