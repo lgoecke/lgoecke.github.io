@@ -10,8 +10,8 @@ permalink: /music/
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .album-title {
@@ -46,7 +46,7 @@ permalink: /music/
   .song-item {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     min-height: 40px;
     justify-content: center;
   }
