@@ -9,19 +9,23 @@ permalink: /music/
     list-style-type: none;
     padding: 0;
   }
+
   .song-item {
     display: flex;
     align-items: center;
     margin-bottom: 1.5rem;
     min-height: 40px;
+    gap: 1.5rem; /* Controls the exact distance between name and player */
   }
+
   .song-title {
     cursor: pointer;
     font-size: 1.25rem;
     font-weight: bold;
     transition: color 0.1s;
-    min-width: 200px;
+    /* Removed min-width to prevent large gaps */
   }
+
   .song-title:hover {
     color: #666;
   }
@@ -34,6 +38,7 @@ permalink: /music/
     flex-grow: 1;
     max-width: 300px;
   }
+
   .custom-player.active {
     display: flex;
   }
@@ -48,8 +53,9 @@ permalink: /music/
     color: #111;
     width: 20px;
     text-align: left;
+    line-height: 1; /* Removes default text bounding box padding */
+    transform: translateY(-1px); /* Nudges the icon up to align perfectly with the 1px bar */
   }
-
   .progress-bar {
     -webkit-appearance: none;
     appearance: none;
