@@ -89,6 +89,17 @@ permalink: /music/
     color: #999;
     font-family: monospace;
   }
+
+  .download-btn {
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .download-btn:hover {
+    color: #111;
+  }
 </style>
 
 <ul class="song-list">
@@ -98,6 +109,7 @@ permalink: /music/
       <button class="play-toggle">play</button>
       <input type="range" class="progress-bar" value="0" max="100">
       <span class="time-display">0:00</span>
+      <a href="/assets/audio/sign1.mp3" download class="download-btn">↓</a>
     </div>
     <audio preload="none">
       <source src="/assets/audio/sign1.mp3" type="audio/mpeg">
@@ -110,6 +122,7 @@ permalink: /music/
       <button class="play-toggle">play</button>
       <input type="range" class="progress-bar" value="0" max="100">
       <span class="time-display">0:00</span>
+      <a href="/assets/audio/sign1.mp3" download class="download-btn">↓</a>
     </div>
     <audio preload="none">
       <source src="/assets/audio/sign2.mp3" type="audio/mpeg">
@@ -122,6 +135,7 @@ permalink: /music/
       <button class="play-toggle">play</button>
       <input type="range" class="progress-bar" value="0" max="100">
       <span class="time-display">0:00</span>
+      <a href="/assets/audio/sign1.mp3" download class="download-btn">↓</a>
     </div>
     <audio preload="none">
       <source src="/assets/audio/sign3.mp3" type="audio/mpeg">
