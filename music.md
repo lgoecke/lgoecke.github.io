@@ -12,71 +12,183 @@ permalink: /music/
   .song-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    min-height: 54px; /* Prevents vertical jumping when player appears */
+    margin-bottom: 1.5rem;
+    min-height: 40px;
   }
   .song-title {
     cursor: pointer;
     font-size: 1.25rem;
     font-weight: bold;
     transition: color 0.1s;
+    min-width: 200px;
   }
   .song-title:hover {
-    text-decoration: underline;
+    color: #666;
   }
-  .song-player {
-    display: none; /* Hidden by default */
-    height: 40px;
+
+  /* Minimal Player UI */
+  .custom-player {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+    max-width: 300px;
   }
-  .song-player.active {
-    display: block; /* Revealed when clicked */
+  .custom-player.active {
+    display: flex;
+  }
+
+  .play-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #111;
+    width: 20px;
+    text-align: left;
+  }
+
+  .progress-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    flex-grow: 1;
+    height: 1px;
+    background: #ccc;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Scrubber dot */
+  .progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #111;
+  }
+  .progress-bar::-moz-range-thumb {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #111;
+    border: none;
+  }
+
+  .time-display {
+    font-size: 0.85rem;
+    color: #888;
+    font-family: monospace;
   }
 </style>
 
 <ul class="song-list">
   <li class="song-item">
     <span class="song-title">sign 1</span>
-    <audio class="song-player" controls preload="none">
+    <div class="custom-player">
+      <button class="play-toggle">||</button>
+      <input type="range" class="progress-bar" value="0" max="100">
+      <span class="time-display">0:00</span>
+    </div>
+    <audio preload="none">
       <source src="/assets/audio/sign1.mp3" type="audio/mpeg">
     </audio>
   </li>
+
   <li class="song-item">
     <span class="song-title">sign 2</span>
-    <audio class="song-player" controls preload="none">
+    <div class="custom-player">
+      <button class="play-toggle">||</button>
+      <input type="range" class="progress-bar" value="0" max="100">
+      <span class="time-display">0:00</span>
+    </div>
+    <audio preload="none">
       <source src="/assets/audio/sign2.mp3" type="audio/mpeg">
     </audio>
   </li>
+
   <li class="song-item">
     <span class="song-title">sign 3</span>
-    <audio class="song-player" controls preload="none">
+    <div class="custom-player">
+      <button class="play-toggle">||</button>
+      <input type="range" class="progress-bar" value="0" max="100">
+      <span class="time-display">0:00</span>
+    </div>
+    <audio preload="none">
       <source src="/assets/audio/sign3.mp3" type="audio/mpeg">
     </audio>
+  </li>
 </ul>
-
 <script>
+  const formatTime = (seconds) => {
+    if (isNaN(seconds)) return "0:00";
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
   const items = document.querySelectorAll('.song-item');
-  let currentAudio = null;
+  let activeItem = null;
 
   items.forEach(item => {
     const title = item.querySelector('.song-title');
-    const player = item.querySelector('.song-player');
+    const playerUI = item.querySelector('.custom-player');
+    const audio = item.querySelector('audio');
+    const toggleBtn = item.querySelector('.play-toggle');
+    const progressBar = item.querySelector('.progress-bar');
+    const timeDisplay = item.querySelector('.time-display');
 
+    // Play/Pause via Title Click
     title.addEventListener('click', () => {
-      // Ignore click if the player is already active
-      if (currentAudio === player) return;
-
-      // Stop playback and hide the previously active player
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        currentAudio.classList.remove('active');
+      if (activeItem && activeItem !== item) {
+        const oldAudio = activeItem.querySelector('audio');
+        oldAudio.pause();
+        oldAudio.currentTime = 0;
+        activeItem.querySelector('.custom-player').classList.remove('active');
       }
 
-      // Reveal the new player and start playback
-      player.classList.add('active');
-      player.play();
-      currentAudio = player;
+      playerUI.classList.add('active');
+
+      if (audio.paused) {
+        audio.play();
+        toggleBtn.textContent = '||';
+      } else {
+        audio.pause();
+        toggleBtn.textContent = '>';
+      }
+      activeItem = item;
+    });
+
+    // Play/Pause via Button
+    toggleBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        toggleBtn.textContent = '||';
+      } else {
+        audio.pause();
+        toggleBtn.textContent = '>';
+      }
+    });
+
+    // Update progress bar and time display as song plays
+    audio.addEventListener('timeupdate', () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progressBar.value = percent || 0;
+      timeDisplay.textContent = formatTime(audio.currentTime);
+    });
+
+    // Seek when dragging the progress bar
+    progressBar.addEventListener('input', (e) => {
+      const seekTime = (e.target.value / 100) * audio.duration;
+      audio.currentTime = seekTime;
+    });
+
+    // Reset when song finishes
+    audio.addEventListener('ended', () => {
+      toggleBtn.textContent = '>';
+      progressBar.value = 0;
+      timeDisplay.textContent = "0:00";
     });
   });
 </script>
