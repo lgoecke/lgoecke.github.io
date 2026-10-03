@@ -3,9 +3,9 @@ layout: splash
 ---
 
 <style>
-  /* Grey background for the entire landing page */
   body {
-    background-color: #e5e5e5;
+    background-color: #f5f5f5; /* Softer, more refined grey */
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   .home-wrapper {
@@ -17,16 +17,18 @@ layout: splash
   }
 
   .home-name {
-    font-size: 3rem;
-    margin-bottom: 3rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 1.2rem; /* Smaller, understated heading */
+    margin-bottom: 4rem;
+    font-weight: 400;
+    letter-spacing: 0.15em; /* Wide tracking */
+    color: #111;
     text-align: center;
+    text-transform: lowercase;
   }
 
   .square-grid {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem; /* Tighter gap */
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -35,13 +37,15 @@ layout: splash
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 200px;
+    width: 140px; /* Reduced scale to prevent bulkiness */
+    height: 140px;
     background-color: #ffffff;
-    color: #333 !important;
+    color: #111 !important;
     text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 0.85rem; /* Smaller typography inside the box */
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    border: 1px solid #eaeaea; /* Crisp, subtle border */
     border-radius: 0;
   }
 </style>
