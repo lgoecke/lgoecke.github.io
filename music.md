@@ -58,7 +58,7 @@ permalink: /music/
   .song-item {
     display: flex;
     flex-direction: column;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     min-height: 40px;
     justify-content: center;
   }
