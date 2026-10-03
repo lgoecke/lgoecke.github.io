@@ -5,38 +5,43 @@ permalink: /music/
 ---
 
 <style>
-  /* Album Header */
+
+/* Album Header */
   .album-header {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    align-items: flex-end; /* Aligns the text to the bottom of the image */
+    gap: 2rem;
+    margin-top: 5rem; /* Generous breathing room */
+    margin-bottom: 2.5rem;
+    min-height: 140px; /* Reserves space so the page doesn't jump */
   }
 
   .album-title {
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 400;
     letter-spacing: 0.15em;
     color: #999;
     text-transform: lowercase;
-    margin: 0; /* Reset margins since the header handles spacing */
+    margin: 0;
+    padding-bottom: 4px; /* Optical alignment with the image baseline */
   }
 
   .album-cover {
-    width: 45px;
-    height: 45px;
+    width: 140px;
+    height: 140px;
     object-fit: cover;
-    display: none;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transform: translateY(10px); /* Starts slightly lower */
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06); /* Very soft gallery shadow */
   }
 
   .album-cover.active {
-    display: block;
     opacity: 1;
+    transform: translateY(0); /* Glides into place */
+    pointer-events: auto;
   }
-
   /* Track Styles */
   .song-list {
     list-style-type: none;
@@ -222,8 +227,7 @@ permalink: /music/
     const progressBar = item.querySelector('.progress-bar');
     const timeDisplay = item.querySelector('.time-display');
 
-    title.addEventListener('click', () => {
-      // Identify the album section and cover for the clicked track
+  title.addEventListener('click', () => {
       const albumSection = item.closest('.album-section');
       const albumCover = albumSection ? albumSection.querySelector('.album-cover') : null;
 
@@ -236,24 +240,21 @@ permalink: /music/
         oldDetails.classList.remove('active');
         activeItem.querySelector('.play-toggle').textContent = 'play';
 
-        // Hide the old album cover if moving to a track in a different album
+        // Hide the old album cover smoothly via CSS class
         const oldAlbumSection = activeItem.closest('.album-section');
         const oldAlbumCover = oldAlbumSection ? oldAlbumSection.querySelector('.album-cover') : null;
 
         if (oldAlbumCover && oldAlbumCover !== albumCover) {
-          oldAlbumCover.style.display = 'none';
           oldAlbumCover.classList.remove('active');
         }
       }
 
-      // Expand the track UI
       songDetails.style.display = 'flex';
       setTimeout(() => songDetails.classList.add('active'), 10);
 
-      // Show the album cover if the .jpg successfully loaded
+      // Show the new album cover smoothly via CSS class
       if (albumCover && !albumCover.getAttribute('data-error')) {
-        albumCover.style.display = 'block';
-        setTimeout(() => albumCover.classList.add('active'), 10);
+        albumCover.classList.add('active');
       }
 
       if (audio.paused) {
