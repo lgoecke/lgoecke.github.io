@@ -4,10 +4,12 @@
     - "sign 2"
     - "sign 3"
 - title: "Þúfa"
+  cover: "thufa"
   tracks:
     - "There arrived the most beautiful"
     - "here after you left,"
-    - "the kind that makes the world be quiet"
+    - title: "the kind that makes the world be quiet."
+      file: "thekindthatmakestheworldbequiet"
 # Standalone tracks outside any album grouping
 - title: singles
   tracks:

@@ -154,9 +154,14 @@ permalink: /music/
 {% for group in site.data.albums %}
   <div class="album-section">
 
-    {% if group.title and group.title != "" %}
-      <!-- URL-encodes special characters like Þ and ú for the browser -->
-      {% assign album_filename = group.title | remove: " " | url_encode %}
+   {% if group.title and group.title != "" %}
+      <!-- Use the cover variable if it exists, otherwise use the title with removed spaces -->
+      {% if group.cover %}
+        {% assign album_filename = group.cover %}
+      {% else %}
+        {% assign album_filename = group.title | remove: " " %}
+      {% endif %}
+
       <div class="album-header">
         <h2 class="album-title">{{ group.title }}</h2>
         <img src="/assets/audio/{{ album_filename }}.jpg" class="album-cover" onerror="this.setAttribute('data-error', 'true'); this.style.display='none';">
@@ -168,9 +173,18 @@ permalink: /music/
 
     <ul class="song-list">
       {% for track in group.tracks %}
-        {% assign filename = track | remove: " " | url_encode %}
+
+        <!-- Check if the track is an object with a specific file, or just a string -->
+        {% if track.title %}
+          {% assign track_title = track.title %}
+          {% assign filename = track.file %}
+        {% else %}
+          {% assign track_title = track %}
+          {% assign filename = track | remove: " " %}
+        {% endif %}
+
         <li class="song-item">
-          <span class="song-title">{{ track }}</span>
+          <span class="song-title">{{ track_title }}</span>
           <div class="song-details">
             <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
             <div class="custom-player">
@@ -185,7 +199,7 @@ permalink: /music/
           </audio>
         </li>
       {% endfor %}
-    </ul>
+   </ul>
   </div>
 {% endfor %}
 
