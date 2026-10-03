@@ -153,17 +153,22 @@ permalink: /music/
 
 {% for group in site.data.albums %}
   <div class="album-section">
-    {% if group.title %}
-      {% assign album_filename = group.title | remove: " " %}
+
+    {% if group.title and group.title != "" %}
+      <!-- URL-encodes special characters like Þ and ú for the browser -->
+      {% assign album_filename = group.title | remove: " " | url_encode %}
       <div class="album-header">
         <h2 class="album-title">{{ group.title }}</h2>
-        <!-- Loads e.g., firstep.jpg. If missing, it hides itself and sets data-error. -->
         <img src="/assets/audio/{{ album_filename }}.jpg" class="album-cover" onerror="this.setAttribute('data-error', 'true'); this.style.display='none';">
       </div>
+    {% else %}
+      <!-- Adds spacing so un-albumed tracks don't merge into the album above -->
+      <div style="margin-top: 3rem;"></div>
     {% endif %}
+
     <ul class="song-list">
       {% for track in group.tracks %}
-        {% assign filename = track | remove: " " %}
+        {% assign filename = track | remove: " " | url_encode %}
         <li class="song-item">
           <span class="song-title">{{ track }}</span>
           <div class="song-details">
