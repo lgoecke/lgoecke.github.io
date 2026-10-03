@@ -3,12 +3,11 @@ layout: splash
 ---
 
 <style>
-  /* Hide default Minimal Mistakes navigation and footer */
-  .masthead, .page__footer {
-    display: none !important;
+  /* Grey background for the entire landing page */
+  body {
+    background-color: #e5e5e5;
   }
 
-  /* Full-page centering container */
   .home-wrapper {
     display: flex;
     flex-direction: column;
@@ -17,7 +16,6 @@ layout: splash
     min-height: 85vh;
   }
 
-  /* Name typography */
   .home-name {
     font-size: 3rem;
     margin-bottom: 3rem;
@@ -26,7 +24,6 @@ layout: splash
     text-align: center;
   }
 
-  /* Responsive grid for squares */
   .square-grid {
     display: flex;
     gap: 2rem;
@@ -34,25 +31,18 @@ layout: splash
     justify-content: center;
   }
 
-  /* Square button styling */
   .square-link {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 200px;
     height: 200px;
-    background-color: #f2f3f3;
+    background-color: #ffffff;
     color: #333 !important;
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
-    border-radius: 8px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-  }
-
-  .square-link:hover {
-    background-color: #e2e4e4;
-    transform: translateY(-5px);
+    border-radius: 0;
   }
 </style>
 
