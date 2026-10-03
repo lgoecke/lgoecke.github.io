@@ -3,7 +3,20 @@ layout: single
 title: "luca göcke"
 permalink: /music/
 ---
+
 <style>
+  /* Album Typography */
+  .album-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: #999;
+    text-transform: lowercase;
+  }
+
+  /* Track Styles */
   .song-list {
     list-style-type: none;
     padding: 0;
@@ -31,7 +44,6 @@ permalink: /music/
     color: #888;
   }
 
-  /* Container for cover art and player UI */
   .song-details {
     display: none;
     align-items: center;
@@ -48,12 +60,11 @@ permalink: /music/
     opacity: 1;
   }
 
-  /* Minimal cover art styling */
   .cover-art {
     width: 60px;
     height: 60px;
     object-fit: cover;
-    background-color: #f5f5f5; /* Fallback color before load */
+    background-color: #f5f5f5;
   }
 
   .custom-player {
@@ -119,69 +130,30 @@ permalink: /music/
   }
 </style>
 
-<ul class="song-list">
-  <li class="song-item">
-    <span class="song-title">sign 1</span>
-    <div class="song-details">
-      <img src="/assets/audio/sign1.jpg" class="cover-art" onerror="this.style.display='none'">
-      <div class="custom-player">
-        <button class="play-toggle">play</button>
-        <input type="range" class="progress-bar" value="0" max="100">
-        <span class="time-display">0:00</span>
-        <a href="/assets/audio/sign1.mp3" download class="download-btn">↓</a>
-      </div>
-    </div>
-    <audio preload="none">
-      <source src="/assets/audio/sign1.mp3" type="audio/mpeg">
-    </audio>
-  </li>
-
-  <li class="song-item">
-    <span class="song-title">sign 2</span>
-    <div class="song-details">
-      <img src="/assets/audio/sign2.jpg" class="cover-art" onerror="this.style.display='none'">
-      <div class="custom-player">
-        <button class="play-toggle">play</button>
-        <input type="range" class="progress-bar" value="0" max="100">
-        <span class="time-display">0:00</span>
-        <a href="/assets/audio/sign2.mp3" download class="download-btn">↓</a>
-      </div>
-    </div>
-    <audio preload="none">
-      <source src="/assets/audio/sign2.mp3" type="audio/mpeg">
-    </audio>
-  </li>
-
-  <li class="song-item">
-    <span class="song-title">sign 3</span>
-    <div class="song-details">
-      <img src="/assets/audio/sign3.jpg" class="cover-art" onerror="this.style.display='none'">
-      <div class="custom-player">
-        <button class="play-toggle">play</button>
-        <input type="range" class="progress-bar" value="0" max="100">
-        <span class="time-display">0:00</span>
-      </div>
-    </div>
-    <audio preload="none">
-      <source src="/assets/audio/sign3.mp3" type="audio/mpeg">
-    </audio>
-  </li>
-  <li class="song-item">
-    <span class="song-title">white sky, wet cherry trees 1</span>
-    <div class="song-details">
-      <img src="/assets/audio/whitesky,wetcherrytrees1.jpg" class="cover-art" onerror="this.style.display='none'">
-      <div class="custom-player">
-        <button class="play-toggle">play</button>
-        <input type="range" class="progress-bar" value="0" max="100">
-        <span class="time-display">0:00</span>
-        <a href="/assets/audio/whitesky,wetcherrytrees1.mp3" download class="download-btn">↓</a>
-      </div>
-    </div>
-    <audio preload="none">
-      <source src="/assets/audio/whitesky,wetcherrytrees1.mp3" type="audio/mpeg">
-    </audio>
-  </li>
-</ul>
+<!-- Loops through data/albums.yml -->
+{% for album in site.data.albums %}
+  <h2 class="album-title">{{ album.title }}</h2>
+  <ul class="song-list">
+    {% for track in album.tracks %}
+      {% assign filename = track | remove: " " %}
+      <li class="song-item">
+        <span class="song-title">{{ track }}</span>
+        <div class="song-details">
+          <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
+          <div class="custom-player">
+            <button class="play-toggle">play</button>
+            <input type="range" class="progress-bar" value="0" max="100">
+            <span class="time-display">0:00</span>
+            <a href="/assets/audio/{{ filename }}.mp3" download class="download-btn">↓</a>
+          </div>
+        </div>
+        <audio preload="none">
+          <source src="/assets/audio/{{ filename }}.mp3" type="audio/mpeg">
+        </audio>
+      </li>
+    {% endfor %}
+  </ul>
+{% endfor %}
 
 <script>
   const formatTime = (seconds) => {
@@ -203,7 +175,6 @@ permalink: /music/
     const timeDisplay = item.querySelector('.time-display');
 
     title.addEventListener('click', () => {
-      // Close previously open track
       if (activeItem && activeItem !== item) {
         const oldAudio = activeItem.querySelector('audio');
         oldAudio.pause();
@@ -214,7 +185,6 @@ permalink: /music/
         activeItem.querySelector('.play-toggle').textContent = 'play';
       }
 
-      // Open new track
       songDetails.style.display = 'flex';
       setTimeout(() => songDetails.classList.add('active'), 10);
 

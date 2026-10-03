@@ -1,0 +1,14 @@
+- title: "signs"
+  tracks:
+    - "sign 1"
+    - "sign 2"
+    - "sign 3"
+- title: "Þúfa"
+  tracks:
+    - "There arrived the most beautiful"
+    - "here after you left,"
+    - "the kind that makes the world be quiet"
+# Standalone tracks outside any album grouping
+- title: null
+  tracks:
+    - "white sky, wet cherry trees 1"
