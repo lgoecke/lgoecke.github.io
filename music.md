@@ -85,7 +85,7 @@ permalink: /music/
     opacity: 0;
     transition: opacity 0.3s ease;
     width: 100%;
-    max-width: 400px;
+    max-width: 480px;
   }
 
   .song-details.active {
@@ -161,13 +161,37 @@ permalink: /music/
   .download-btn:hover {
     color: #111;
   }
+
+/* --- NEW: Comment Styling --- */
+  .album-comment {
+    font-size: 0.85rem;
+    color: #888;
+    line-height: 1.5;
+    max-width: 480px;
+    margin-top: -0.5rem; /* Pulls it closer to the expanding album header */
+    margin-bottom: 2rem;
+  }
+
+  .song-ui-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+
+  .song-comment {
+    font-size: 0.8rem;
+    color: #999;
+    line-height: 1.4;
+    margin: 0;
+  }
 </style>
 
 {% for group in site.data.albums %}
   <div class="album-section">
 
-   {% if group.title and group.title != "" %}
-      <!-- Use the cover variable if it exists, otherwise use the title with removed spaces -->
+    {% if group.title and group.title != "" %}
       {% if group.cover %}
         {% assign album_filename = group.cover %}
       {% else %}
@@ -178,15 +202,58 @@ permalink: /music/
         <h2 class="album-title">{{ group.title }}</h2>
         <img src="/assets/audio/{{ album_filename }}.jpg" class="album-cover" onerror="this.setAttribute('data-error', 'true'); this.style.display='none';">
       </div>
+
+      <!-- Album Comment -->
+      {% if group.comment %}
+        <p class="album-comment">{{ group.comment }}</p>
+      {% endif %}
+
     {% else %}
-      <!-- Adds spacing so un-albumed tracks don't merge into the album above -->
       <div style="margin-top: 3rem;"></div>
     {% endif %}
 
     <ul class="song-list">
       {% for track in group.tracks %}
 
-        <!-- Check if the track is an object with a specific file, or just a string -->
+        {% if track.title %}
+          {% assign track_title = track.title %}
+          {% assign filename = track.file %}
+          {% assign track_comment = track.comment %}
+        {% else %}
+          {% assign track_title = track %}
+          {% assign filename = track | remove: " " %}
+          {% assign track_comment = nil %}
+        {% endif %}
+
+        <li class="song-item">
+          <span class="song-title">{{ track_title }}</span>
+          <div class="song-details">
+            <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
+
+            <!-- Track Player and Comment Stack -->
+            <div class="song-ui-wrapper">
+              <div class="custom-player">
+                <button class="play-toggle">play</button>
+                <input type="range" class="progress-bar" value="0" max="100">
+                <span class="time-display">0:00</span>
+                <a href="/assets/audio/{{ filename }}.mp3" download class="download-btn">↓</a>
+              </div>
+              {% if track_comment %}
+                <p class="song-comment">{{ track_comment }}</p>
+              {% endif %}
+            </div>
+
+          </div>
+          <audio preload="none">
+            <source src="/assets/audio/{{ filename }}.mp3" type="audio/mpeg">
+          </audio>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+
+if the track is an object with a specific file, or just a string -->
         {% if track.title %}
           {% assign track_title = track.title %}
           {% assign filename = track.file %}
