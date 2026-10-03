@@ -166,6 +166,21 @@ permalink: /music/
       <source src="/assets/audio/sign3.mp3" type="audio/mpeg">
     </audio>
   </li>
+  <li class="song-item">
+    <span class="song-title">white sky, wet cherry trees 1</span>
+    <div class="song-details">
+      <img src="/assets/audio/whitesky,wetcherrytrees1.jpg" class="cover-art" onerror="this.style.display='none'">
+      <div class="custom-player">
+        <button class="play-toggle">play</button>
+        <input type="range" class="progress-bar" value="0" max="100">
+        <span class="time-display">0:00</span>
+        <a href="/assets/audio/whitesky,wetcherrytrees1.mp3" download class="download-btn">↓</a>
+      </div>
+    </div>
+    <audio preload="none">
+      <source src="/assets/audio/whitesky,wetcherrytrees1.mp3" type="audio/mpeg">
+    </audio>
+  </li>
 </ul>
 
 <script>
