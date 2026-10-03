@@ -15,76 +15,78 @@ permalink: /music/
     align-items: center;
     margin-bottom: 0.5rem;
     min-height: 40px;
-    gap: 1.5rem; /* Controls the exact distance between name and player */
+    gap: 1.5rem;
   }
 
   .song-title {
     cursor: pointer;
-    font-size: 1.25rem;
-    font-weight: bold;
-    transition: color 0.1s;
-    /* Removed min-width to prevent large gaps */
+    font-size: 1.1rem;
+    font-weight: 400; /* Removed bold */
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+    color: #111;
   }
 
   .song-title:hover {
-    color: #666;
+    color: #888;
   }
 
-  /* Minimal Player UI */
   .custom-player {
     display: none;
     align-items: center;
     gap: 1rem;
     flex-grow: 1;
     max-width: 300px;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Fade-in effect */
   }
 
   .custom-player.active {
     display: flex;
+    opacity: 1;
   }
 
   .play-toggle {
     background: none;
     border: none;
     padding: 0;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 0.85rem;
+    font-family: monospace;
     cursor: pointer;
     color: #111;
-    width: 20px;
+    width: 45px; /* Fixed width prevents layout shift */
     text-align: left;
-    line-height: 1; /* Removes default text bounding box padding */
-    transform: translateY(-1px); /* Nudges the icon up to align perfectly with the 1px bar */
   }
+
   .progress-bar {
     -webkit-appearance: none;
     appearance: none;
     flex-grow: 1;
     height: 1px;
-    background: #ccc;
+    background: #d1d1d1;
     cursor: pointer;
     outline: none;
   }
 
-  /* Scrubber dot */
   .progress-bar::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 0; /* Square instead of circle */
     background: #111;
   }
+
   .progress-bar::-moz-range-thumb {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 0;
     background: #111;
     border: none;
   }
 
   .time-display {
-    font-size: 0.85rem;
-    color: #888;
+    font-size: 0.8rem;
+    color: #999;
     font-family: monospace;
   }
 </style>
@@ -93,7 +95,7 @@ permalink: /music/
   <li class="song-item">
     <span class="song-title">sign 1</span>
     <div class="custom-player">
-      <button class="play-toggle">||</button>
+      <button class="play-toggle">play</button>
       <input type="range" class="progress-bar" value="0" max="100">
       <span class="time-display">0:00</span>
     </div>
@@ -105,7 +107,7 @@ permalink: /music/
   <li class="song-item">
     <span class="song-title">sign 2</span>
     <div class="custom-player">
-      <button class="play-toggle">||</button>
+      <button class="play-toggle">play</button>
       <input type="range" class="progress-bar" value="0" max="100">
       <span class="time-display">0:00</span>
     </div>
@@ -117,7 +119,7 @@ permalink: /music/
   <li class="song-item">
     <span class="song-title">sign 3</span>
     <div class="custom-player">
-      <button class="play-toggle">||</button>
+      <button class="play-toggle">play</button>
       <input type="range" class="progress-bar" value="0" max="100">
       <span class="time-display">0:00</span>
     </div>
@@ -126,6 +128,7 @@ permalink: /music/
     </audio>
   </li>
 </ul>
+
 <script>
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return "0:00";
@@ -145,54 +148,53 @@ permalink: /music/
     const progressBar = item.querySelector('.progress-bar');
     const timeDisplay = item.querySelector('.time-display');
 
-    // Play/Pause via Title Click
     title.addEventListener('click', () => {
       if (activeItem && activeItem !== item) {
         const oldAudio = activeItem.querySelector('audio');
         oldAudio.pause();
         oldAudio.currentTime = 0;
-        activeItem.querySelector('.custom-player').classList.remove('active');
+        const oldUI = activeItem.querySelector('.custom-player');
+        oldUI.classList.remove('active');
+        activeItem.querySelector('.play-toggle').textContent = 'play';
       }
 
-      playerUI.classList.add('active');
+      // Small delay allows display:flex to apply before setting opacity
+      playerUI.style.display = 'flex';
+      setTimeout(() => playerUI.classList.add('active'), 10);
 
       if (audio.paused) {
         audio.play();
-        toggleBtn.textContent = '||';
+        toggleBtn.textContent = 'pause';
       } else {
         audio.pause();
-        toggleBtn.textContent = '>';
+        toggleBtn.textContent = 'play';
       }
       activeItem = item;
     });
 
-    // Play/Pause via Button
     toggleBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
-        toggleBtn.textContent = '||';
+        toggleBtn.textContent = 'pause';
       } else {
         audio.pause();
-        toggleBtn.textContent = '>';
+        toggleBtn.textContent = 'play';
       }
     });
 
-    // Update progress bar and time display as song plays
     audio.addEventListener('timeupdate', () => {
       const percent = (audio.currentTime / audio.duration) * 100;
       progressBar.value = percent || 0;
       timeDisplay.textContent = formatTime(audio.currentTime);
     });
 
-    // Seek when dragging the progress bar
     progressBar.addEventListener('input', (e) => {
       const seekTime = (e.target.value / 100) * audio.duration;
       audio.currentTime = seekTime;
     });
 
-    // Reset when song finishes
     audio.addEventListener('ended', () => {
-      toggleBtn.textContent = '>';
+      toggleBtn.textContent = 'play';
       progressBar.value = 0;
       timeDisplay.textContent = "0:00";
     });
