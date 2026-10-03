@@ -5,15 +5,36 @@ permalink: /music/
 ---
 
 <style>
-  /* Album Typography */
+  /* Album Header */
+  .album-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
   .album-title {
     font-size: 0.9rem;
     font-weight: bold;
     letter-spacing: 0.15em;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
     color: #999;
     text-transform: lowercase;
+    margin: 0; /* Reset margins since the header handles spacing */
+  }
+
+  .album-cover {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .album-cover.active {
+    display: block;
+    opacity: 1;
   }
 
   /* Track Styles */
@@ -25,7 +46,7 @@ permalink: /music/
   .song-item {
     display: flex;
     flex-direction: column;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     min-height: 40px;
     justify-content: center;
   }
@@ -130,29 +151,37 @@ permalink: /music/
   }
 </style>
 
-<!-- Loops through data/albums.yml -->
-{% for album in site.data.albums %}
-  <h2 class="album-title">{{ album.title }}</h2>
-  <ul class="song-list">
-    {% for track in album.tracks %}
-      {% assign filename = track | remove: " " %}
-      <li class="song-item">
-        <span class="song-title">{{ track }}</span>
-        <div class="song-details">
-          <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
-          <div class="custom-player">
-            <button class="play-toggle">play</button>
-            <input type="range" class="progress-bar" value="0" max="100">
-            <span class="time-display">0:00</span>
-            <a href="/assets/audio/{{ filename }}.mp3" download class="download-btn">↓</a>
+{% for group in site.data.albums %}
+  <div class="album-section">
+    {% if group.title %}
+      {% assign album_filename = group.title | remove: " " %}
+      <div class="album-header">
+        <h2 class="album-title">{{ group.title }}</h2>
+        <!-- Loads e.g., firstep.jpg. If missing, it hides itself and sets data-error. -->
+        <img src="/assets/audio/{{ album_filename }}.jpg" class="album-cover" onerror="this.setAttribute('data-error', 'true'); this.style.display='none';">
+      </div>
+    {% endif %}
+    <ul class="song-list">
+      {% for track in group.tracks %}
+        {% assign filename = track | remove: " " %}
+        <li class="song-item">
+          <span class="song-title">{{ track }}</span>
+          <div class="song-details">
+            <img src="/assets/audio/{{ filename }}.jpg" class="cover-art" onerror="this.style.display='none'">
+            <div class="custom-player">
+              <button class="play-toggle">play</button>
+              <input type="range" class="progress-bar" value="0" max="100">
+              <span class="time-display">0:00</span>
+              <a href="/assets/audio/{{ filename }}.mp3" download class="download-btn">↓</a>
+            </div>
           </div>
-        </div>
-        <audio preload="none">
-          <source src="/assets/audio/{{ filename }}.mp3" type="audio/mpeg">
-        </audio>
-      </li>
-    {% endfor %}
-  </ul>
+          <audio preload="none">
+            <source src="/assets/audio/{{ filename }}.mp3" type="audio/mpeg">
+          </audio>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endfor %}
 
 <script>
@@ -175,6 +204,10 @@ permalink: /music/
     const timeDisplay = item.querySelector('.time-display');
 
     title.addEventListener('click', () => {
+      // Identify the album section and cover for the clicked track
+      const albumSection = item.closest('.album-section');
+      const albumCover = albumSection ? albumSection.querySelector('.album-cover') : null;
+
       if (activeItem && activeItem !== item) {
         const oldAudio = activeItem.querySelector('audio');
         oldAudio.pause();
@@ -183,10 +216,26 @@ permalink: /music/
         oldDetails.style.display = 'none';
         oldDetails.classList.remove('active');
         activeItem.querySelector('.play-toggle').textContent = 'play';
+
+        // Hide the old album cover if moving to a track in a different album
+        const oldAlbumSection = activeItem.closest('.album-section');
+        const oldAlbumCover = oldAlbumSection ? oldAlbumSection.querySelector('.album-cover') : null;
+
+        if (oldAlbumCover && oldAlbumCover !== albumCover) {
+          oldAlbumCover.style.display = 'none';
+          oldAlbumCover.classList.remove('active');
+        }
       }
 
+      // Expand the track UI
       songDetails.style.display = 'flex';
       setTimeout(() => songDetails.classList.add('active'), 10);
+
+      // Show the album cover if the .jpg successfully loaded
+      if (albumCover && !albumCover.getAttribute('data-error')) {
+        albumCover.style.display = 'block';
+        setTimeout(() => albumCover.classList.add('active'), 10);
+      }
 
       if (audio.paused) {
         audio.play();
