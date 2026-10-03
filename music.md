@@ -9,11 +9,10 @@ permalink: /music/
 /* Album Header */
   .album-header {
     display: flex;
-    align-items: flex-end; /* Aligns the text to the bottom of the image */
-    gap: 2rem;
-    margin-top: 5rem; /* Generous breathing room */
-    margin-bottom: 2.5rem;
-    min-height: 140px; /* Reserves space so the page doesn't jump */
+    align-items: flex-end;
+    margin-top: 3rem; /* Restored to normal spacing */
+    margin-bottom: 1.5rem;
+    /* Removed min-height and gap so it collapses completely */
   }
 
   .album-title {
@@ -23,25 +22,33 @@ permalink: /music/
     color: #999;
     text-transform: lowercase;
     margin: 0;
-    padding-bottom: 4px; /* Optical alignment with the image baseline */
+    padding-bottom: 4px;
+    white-space: nowrap; /* Prevents text wrapping while expanding */
   }
 
   .album-cover {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
+    width: 0px;
+    height: 0px;
+    margin-left: 0px; /* Handles spacing dynamically instead of using gap */
     opacity: 0;
-    transform: translateY(10px); /* Starts slightly lower */
-    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    object-fit: cover;
     pointer-events: none;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06); /* Very soft gallery shadow */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    /* Animate dimensions and spacing for a fluid push effect */
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                height 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                margin-left 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.4s ease 0.1s; /* Slight delay on opacity so it doesn't pop */
   }
 
   .album-cover.active {
+    width: 140px;
+    height: 140px;
+    margin-left: 2rem; /* Creates the gap as it grows */
     opacity: 1;
-    transform: translateY(0); /* Glides into place */
     pointer-events: auto;
   }
+
   /* Track Styles */
   .song-list {
     list-style-type: none;
