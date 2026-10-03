@@ -2,3 +2,7 @@ title: "Luca Göcke"
 remote_theme: "mmistakes/minimal-mistakes"
 plugins:
   - jekyll-include-cache
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-gist
