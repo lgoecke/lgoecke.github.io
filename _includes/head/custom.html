@@ -32,4 +32,8 @@
     margin-left: auto !important;
     margin-right: auto !important;
   }
+  ::view-transition-group(wander-title) {
+    animation-duration: 0.8s; /* Adjust this value (default is ~0.3s) */
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); /* Adds a smooth deceleration */
+  }
 </style>
