@@ -99,6 +99,24 @@ permalink: /cv/
     .cv-skill-category {
       margin-bottom: 0.2rem;
     }
+
+    .cv-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .cv-link:hover {
+    color: #888;
+  }
+
+  .cv-link-arrow {
+    font-family: monospace;
+    font-size: 0.8rem;
+    margin-left: 0.2rem;
+    color: #bbb;
+  }
+
   }
 </style>
 
@@ -108,7 +126,15 @@ permalink: /cv/
     <div class="cv-item">
       <div class="cv-dates">{{ job.dates }}</div>
       <div class="cv-content">
-        <h3 class="cv-title">{{ job.title }}</h3>
+        <h3 class="cv-title">
+      {% if project.url %}
+        <a href="{{ job.url }}" target="_blank" rel="noopener noreferrer" class="cv-link">
+          {{ job.title }}<span class="cv-link-arrow">↗</span>
+        </a>
+      {% else %}
+        {{ job.title }}
+      {% endif %}
+    </h3>
         <p class="cv-institution">{{ job.institution }}</p>
         {% if job.description %}
           <p class="cv-desc">{{ job.description }}</p>
@@ -124,7 +150,15 @@ permalink: /cv/
     <div class="cv-item">
       <div class="cv-dates">{{ project.dates }}</div>
       <div class="cv-content">
-        <h3 class="cv-title">{{ project.title }}</h3>
+	<h3 class="cv-title">
+      {% if project.url %}
+        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="cv-link">
+          {{ project.title }}<span class="cv-link-arrow">↗</span>
+        </a>
+      {% else %}
+        {{ project.title }}
+      {% endif %}
+    </h3>
         <!-- You can use the institution field for the medium/tools -->
         <p class="cv-institution">{{ project.institution }}</p>
         {% if project.description %}
@@ -141,7 +175,15 @@ permalink: /cv/
     <div class="cv-item">
       <div class="cv-dates">{{ degree.dates }}</div>
       <div class="cv-content">
-        <h3 class="cv-title">{{ degree.title }}</h3>
+       <h3 class="cv-title">
+      {% if degree.url %}
+        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="cv-link">
+          {{ degree.title }}<span class="cv-link-arrow">↗</span>
+        </a>
+      {% else %}
+        {{ degree.title }}
+      {% endif %}
+    </h3>
         <p class="cv-institution">{{ degree.institution }}</p>
         {% if degree.description %}
           <p class="cv-desc">{{ degree.description }}</p>

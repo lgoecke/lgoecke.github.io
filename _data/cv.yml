@@ -15,10 +15,11 @@ scientific:
 
 artistic:
   - dates: "2025"
-    title: "Joint release on Label 'AEDI'"
+    title: "Joint release ACGTU on Nur - AEDI Records"
+    url: "https://aedirecords.bandcamp.com/track/acgtu"
 
 skills:
   - category: "Languages"
     items: "German (Native), English (Fluent), French (Reading), Icelandic, Japanese"
   - category: "Technical"
-    items: "Python, C, Rust, Arch Linux, Data Analysis"
+    items: "Python, Rust, Linux"
