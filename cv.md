@@ -7,8 +7,8 @@ permalink: /cv/
 <style>
   /* Section Spacing */
   .cv-section {
-    margin-top: 4rem;
-    margin-bottom: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
   }
 
   /* Chic Lowercase Headers (Matches your album titles) */
@@ -103,8 +103,8 @@ permalink: /cv/
 </style>
 
 <div class="cv-section">
-  <h2 class="cv-header">experience</h2>
-  {% for job in site.data.cv.experience %}
+  <h2 class="cv-header">scientific projects</h2>
+  {% for job in site.data.cv.scientific %}
     <div class="cv-item">
       <div class="cv-dates">{{ job.dates }}</div>
       <div class="cv-content">
@@ -112,6 +112,23 @@ permalink: /cv/
         <p class="cv-institution">{{ job.institution }}</p>
         {% if job.description %}
           <p class="cv-desc">{{ job.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="cv-section">
+  <h2 class="cv-header">artistic projects</h2>
+  {% for project in site.data.cv.artistic %}
+    <div class="cv-item">
+      <div class="cv-dates">{{ project.dates }}</div>
+      <div class="cv-content">
+        <h3 class="cv-title">{{ project.title }}</h3>
+        <!-- You can use the institution field for the medium/tools -->
+        <p class="cv-institution">{{ project.institution }}</p>
+        {% if project.description %}
+          <p class="cv-desc">{{ project.description }}</p>
         {% endif %}
       </div>
     </div>

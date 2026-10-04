@@ -1,21 +1,24 @@
 education:
-  - dates: "2021 — 2023"
+  - dates: "2021 — 2024"
     title: "M.Sc. Quantum Science and Technology"
-    institution: "TUM & LMU Munich"
-    description: "Specialization in superconducting qubits and cold atom physics."
+    institution: "TUM & LMU Munich, University of Tokyo"
+    description: "Thesis under Prof. Yasunobu Nakamura, Automation of the calibration of a 16-Qubit superconducting qubit chip"
   - dates: "2017 — 2021"
     title: "B.Sc. Physics"
-    institution: "University Name"
-    description: "Foundational physics and mathematics."
+    institution: "TUM Munich"
 
-experience:
-  - dates: "2023 — 2025"
+scientific:
+  - dates: "2024 — 2026"
     title: "Doctoral Researcher"
-    institution: "Research Institute Name"
-    description: "Conducted research in ultracold quantum optics. Developed complex experimental setups and utilized Python and C for data analysis and hardware control."
+    institution: "HU-Berlin, Prof. Arno Rauschenbeutel"
+    description: "Setting up a Strontium based ultracold experiment with the goal of trapping strontium atoms next to a step-index nano-glass-fiber"
+
+artistic:
+  - dates: "2025"
+    title: "Joint release on Label 'AEDI'"
 
 skills:
   - category: "Languages"
     items: "German (Native), English (Fluent), French (Reading), Icelandic, Japanese"
   - category: "Technical"
-    items: "Python, C, Rust, Arch Linux, TouchDesigner, Data Analysis"
+    items: "Python, C, Rust, Arch Linux, Data Analysis"
