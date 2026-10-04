@@ -2,16 +2,21 @@ education:
   - dates: "2021 — 2024"
     title: "M.Sc. Quantum Science and Technology"
     institution: "TUM & LMU Munich, University of Tokyo"
-    description: "Thesis under Prof. Yasunobu Nakamura, Automation of the calibration of a 16-Qubit superconducting qubit chip"
+    description: "Specialization in"
   - dates: "2017 — 2021"
     title: "B.Sc. Physics"
     institution: "TUM Munich"
+    description: "additional coursework in mathematics and medical physics"
 
 scientific:
   - dates: "2024 — 2026"
     title: "Doctoral Researcher"
     institution: "HU-Berlin, Prof. Arno Rauschenbeutel"
-    description: "Setting up a Strontium based ultracold experiment with the goal of trapping strontium atoms next to a step-index nano-glass-fiber"
+    description: "Setting up a Strontium based ultracold experiment with the goal of trapping a 1-D array of Strontium atoms next to a step-index nano-glass-fiber"
+  - dates: "2023-2024"
+    title: "Master Thesis Work"
+    institution: "University of Tokyo & RIKEN"
+    description: "Automation of the calibration of a 16-Qubit superconducting Qubit chip"
 
 artistic:
   - dates: "2025"
