@@ -48,14 +48,13 @@
   }
 </style>
 <script>
-  // Wrap the page title in a link back to the index
   document.addEventListener("DOMContentLoaded", () => {
-    const pageTitle = document.querySelector(".page__title");
+    // Target the existing link inside the page title
+    const pageTitleLink = document.querySelector(".page__title a");
 
-    // Only apply this if we are not already on the homepage
-    if (pageTitle && window.location.pathname !== "/") {
-      const titleText = pageTitle.innerHTML;
-      pageTitle.innerHTML = `<a href="/">${titleText}</a>`;
+    if (pageTitleLink && window.location.pathname !== "/") {
+      // Re-route the existing link to the homepage
+      pageTitleLink.href = "/";
     }
   });
 </script>
