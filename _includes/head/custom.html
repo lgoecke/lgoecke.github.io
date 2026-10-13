@@ -36,4 +36,26 @@
     animation-duration: 1s; /* Adjust this value (default is ~0.3s) */
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); /* Adds a smooth deceleration */
   }
+  /* Make the wandering title link inherit styling and fade on hover */
+  .page__title a {
+    color: inherit !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+  }
+
+  .page__title a:hover {
+    color: #888 !important;
+  }
 </style>
+<script>
+  // Wrap the page title in a link back to the index
+  document.addEventListener("DOMContentLoaded", () => {
+    const pageTitle = document.querySelector(".page__title");
+
+    // Only apply this if we are not already on the homepage
+    if (pageTitle && window.location.pathname !== "/") {
+      const titleText = pageTitle.innerHTML;
+      pageTitle.innerHTML = `<a href="/">${titleText}</a>`;
+    }
+  });
+</script>
