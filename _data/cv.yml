@@ -2,11 +2,11 @@ education:
   - dates: "2021 — 2024"
     title: "M.Sc. Quantum Science and Technology"
     institution: "TUM & LMU Munich, University of Tokyo"
-    description: "Specialization in"
+    description: "specialization in "
   - dates: "2017 — 2021"
     title: "B.Sc. Physics"
     institution: "TUM Munich"
-    description: "additional coursework in mathematics and medical physics"
+    description: "Additional coursework in mathematics and medical physics"
 
 scientific:
   - dates: "2024 — 2026"
@@ -17,6 +17,19 @@ scientific:
     title: "Master Thesis Work"
     institution: "University of Tokyo & RIKEN"
     description: "Automation of the calibration of a 16-Qubit superconducting quantum chip"
+  - dates: "2021 - 2022"
+    title: "Research assistant position"
+    institution: "MPQ Munich, Bloch Group"
+    description: "Design and control of lab electronics"
+  - dates: "2021"
+    title: "Quantum Entrepreneurship Laboratory in collaboration with IQM"
+    institution: "TUM"
+    description: "Digital-Analog quantum simulation of charge mobilities in organic semicon-
+ductors"
+  - dates: "2020 -2021"
+    title: "Bachelor Thesis Work"
+    institution: "Prof. Robert König, Department of Mathematics, TUM"
+    description: "Approximation algorithms for ground state energies of multi-qutrit systems"
 
 artistic:
   - dates: "2026"
